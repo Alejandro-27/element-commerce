@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
+    user: { _id: String, name: String, email: String, photo: String },
     name: {
       type: String,
       required: true,
@@ -26,6 +27,7 @@ const productSchema = new mongoose.Schema(
     },
     qualification: {
       type: Number,
+      default: 0,
     },
   },
   { timestamps: true }

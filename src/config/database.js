@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+//! Configura strictQuery en true para suprimir la advertencia
+mongoose.set('strictQuery', true);
 const connectDB = async () => {
   try {
     const uri = process.env.MONGO_URI;  // Cambia MONGO_URL por MONGO_URI

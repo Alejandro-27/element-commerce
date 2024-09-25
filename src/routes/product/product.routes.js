@@ -1,11 +1,13 @@
 import express from "express";
 import { Router } from "express";
+import { verifyToken } from "../../middleware/tokenValitador.js";
+import { Paginate } from "../../middleware/pagination.js";
 import {
   createProduct,
   getProducts,
   updateProduct,
   deleteProduct,
-} from "../controllers/product.controller.js";
+} from "../../controllers/Products/product.controller.js";
 const router = Router();
 
 //const router = express.Router();

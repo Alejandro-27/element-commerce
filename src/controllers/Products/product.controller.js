@@ -1,9 +1,20 @@
-import Product from "../models/product.js";
-
+import Product from "../../models/Products/Product";
 // Crear un nuevo producto
 export const createProduct = async (req, res) => {
   try {
-    const product = new Product(req.body);
+    const { name, description, price, photo, category } = req.body;
+
+    if (!name || !description || !price || !photo || !category) {
+      return res
+        .status(404)
+        .json({
+          message: "Complete todos los datos para crear el producto",
+          status: false,
+        });
+    }
+
+
+    
     await product.save();
     res.status(201).json(product);
   } catch (error) {
