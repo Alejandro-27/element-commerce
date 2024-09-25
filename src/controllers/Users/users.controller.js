@@ -1,7 +1,7 @@
 import Users from "../../models/Users/Users";
 import jwt from "jsonwebtoken";
 import config from "../../config";
-import { generateImages } from "../../middleware/libs/process";
+import { uploadFile } from "../../middleware/tools/firebase";
 /**
  * @param {import('express').Request} req
  * @param {import('express').Response} res
@@ -10,20 +10,14 @@ import { generateImages } from "../../middleware/libs/process";
 export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-
-    const { photo, deleteFiles } = await generateImages(
-      req.files,
-      "photo"
-    );
-    deleteImages(deleteFiles);
+    const file = req.file; // Archivo recibido
 
     if (!name || !email || !password) {
-      return res
-        .status(404)
-        .json({ message: "Complete los datos", status: false });
+      return res.status(404).json({ message: "Complete los datos", status: false });
     }
 
-    var usuario = await Users.findOne({ email });
+    // Verifica si el usuario ya existe
+    const usuario = await Users.findOne({ email });
     if (usuario) {
       return res.status(200).json({
         message: "Ese correo ya se encuentra registrado",
@@ -31,21 +25,29 @@ export const register = async (req, res) => {
       });
     }
 
-    const passwordd = await Users.encryptPassword(passwordd);
-    const newUser = Users({
+    // Sube la imagen a Firebase Storage
+    let photoUrl = "";
+    if (file) {
+      const fileName = `${Date.now()}_${file.originalname}`; // Define un nombre único para el archivo
+      photoUrl = await uploadFile(file.buffer, fileName); // Sube el archivo y recibe la URL
+    }
+
+    // Encripta la contraseña
+    const encryptedPassword = await Users.encryptPassword(password);
+
+    // Crea un nuevo usuario
+    const newUser = new Users({
       name,
       email,
-      password: passwordd, //passwordd es la contraseña encriptada
-      photo,
+      password: encryptedPassword, // Usa la contraseña encriptada
+      photo: photoUrl, // Guarda la URL de la foto subida
     });
 
     const user = await newUser.save();
+    return res.status(200).json({ message: "Cuenta creada", status: true, user });
 
-    res.status(200).json({ message: "Cuenta creada", status: true, user });
   } catch (error) {
     console.log(error);
-    res
-      .status(500)
-      .json({ message: "Error interno en el servidor", status: false });
+    res.status(500).json({ message: "Error interno en el servidor", status: false });
   }
 };

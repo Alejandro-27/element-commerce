@@ -7,14 +7,14 @@ import { verifyToken } from "../../middleware/tokenValitador";
 import { register } from "../../controllers/Users/users.controller";
 const router = Router();
 
-const storage = multer.diskStorage({
-  destination: path.join("storage/users"),
+const upload = multer({
+  dest: path.join("storage/user"),
   filename: (req, file, cb) => {
-    cb(null, Math.floor(Math.random() * 50) + file.originalname);
+    cb(null, file.originalname);
   },
 });
-const upload = multer({ storage }).array("photo");
 
-router.post("/register", upload, register);
+router.post('/register', upload.single('photo'), register)
+
 
 export default router;
