@@ -4,7 +4,7 @@ import multer from "multer";
 import path from "path";
 import { verifyToken } from "../../middleware/tokenValitador";
 
-import { register } from "../../controllers/Users/users.controller";
+import { register, login } from "../../controllers/Users/users.controller";
 const router = Router();
 
 const upload = multer({
@@ -14,7 +14,8 @@ const upload = multer({
   },
 });
 
-router.post('/register', upload.single('photo'), register)
+router.post("/register", upload.single("photo"), register);
 
+router.post("/login", login);
 
 export default router;

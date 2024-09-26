@@ -4,13 +4,13 @@ const { Schema } = mongoose;
 
 const userShema = new Schema(
   {
-    token_temp: { type: String, default: "" },
+    token_temp: { type: String, default: "" }, 
     name: { type: String },
     email: { type: String, lowercase: true },
     password: { type: String },
     photo: { type: Array },
     login_code: { type: String, default: "" },
-    login_code_confirmed: { type: String, default: "" },
+    login_code_confirmed: { type: String, default: "" }, 
     codeNewPassMail: { type: String, default: "" },
     codeNewPassConfirm: { type: String, default: "" },
     phone: [

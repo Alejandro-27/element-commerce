@@ -13,7 +13,9 @@ export const register = async (req, res) => {
     const file = req.file; // Archivo recibido
 
     if (!name || !email || !password) {
-      return res.status(404).json({ message: "Complete los datos", status: false });
+      return res
+        .status(404)
+        .json({ message: "Complete los datos", status: false });
     }
 
     // Verifica si el usuario ya existe
@@ -44,10 +46,80 @@ export const register = async (req, res) => {
     });
 
     const user = await newUser.save();
-    return res.status(200).json({ message: "Cuenta creada", status: true, user });
-
+    return res
+      .status(200)
+      .json({ message: "Cuenta creada", status: true, user });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Error interno en el servidor", status: false });
+    res
+      .status(500)
+      .json({ message: "Error interno en el servidor", status: false });
+  }
+};
+
+/**
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ */
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res
+        .status(403)
+        .json({ message: "Falta el correo o la ocntraseña", status: false });
+    }
+
+    const user = await Users.findOne({ email });
+    if (!user) {
+      return res
+        .status(203)
+        .json({ message: "Coorreo inexistente", status: false });
+    }
+
+    const verifiquePass = await Users.comparePassword(password, user.password);
+    if (!verifiquePass) {
+      return res
+        .status(404)
+        .json({ message: "Contraseña incorrecta", status: false });
+    }
+
+    const token = jwt.sign(
+      {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        admin: user.admin,
+      },
+      config.SECRET,
+      {
+        expiresIn: "365d",
+      }
+    );
+
+    const newUser = {
+      id: user.id,
+      token_temp: token,
+    };
+
+    await Users.updateOne({ _id: user.id }, newUser);
+
+    res.status(200).json({
+      message: "Bienvenido",
+      status: true,
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        admin: user.admin,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ message: "Error interno en el servidor", status: false });
   }
 };
