@@ -1,6 +1,7 @@
-import express from "express";
 import { Router } from "express";
-import { verifyToken } from "../../middleware/tokenValitador.js";
+import multer from "multer";
+import path from "path";
+import { verifyToken } from "../../middleware/tokenValitador";
 import { Paginate } from "../../middleware/pagination.js";
 import {
   createProduct,
@@ -10,10 +11,15 @@ import {
 } from "../../controllers/Products/product.controller.js";
 const router = Router();
 
-//const router = express.Router();
+const upload = multer({
+  dest: path.join("storage/product"),
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
 
 // Crear un nuevo producto
-router.post("/createProduct", createProduct);
+router.post("/createProduct", upload.single("photo"), createProduct);
 
 // Obtener todos los productos
 router.get("/", getProducts);
@@ -22,6 +28,6 @@ router.get("/", getProducts);
 router.put("/:id", updateProduct);
 
 // Eliminar un producto
-router.delete("/:id", deleteProduct);
+router.delete("/deleteProduct/:idProduct", deleteProduct);
 
 export default router;

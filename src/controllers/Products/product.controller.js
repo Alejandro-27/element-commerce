@@ -1,24 +1,43 @@
 import Product from "../../models/Products/Product";
+import { uploadFile } from "../../middleware/tools/firebase";
 // Crear un nuevo producto
 export const createProduct = async (req, res) => {
   try {
-    const { name, description, price, photo, category } = req.body;
+    const { name, description, price, category } = req.body;
+    const photo = req.file;
 
     if (!name || !description || !price || !photo || !category) {
-      return res
-        .status(404)
-        .json({
-          message: "Complete todos los datos para crear el producto",
-          status: false,
-        });
+      return res.status(404).json({
+        message: "Complete todos los datos para crear el producto",
+        status: false,
+      });
     }
 
+    // Sube la imagen a Firebase Storage
+    let photoUrl = "";
+    if (photo) {
+      const fileName = `${Date.now()}_${photo.originalname}`; // Define un nombre único para el archivo
+      photoUrl = await uploadFile(photo.buffer, fileName); // Sube el archivo y recibe la URL
+    }
 
-    
-    await product.save();
-    res.status(201).json(product);
+    const newProduct = new Product({
+      name,
+      description,
+      price,
+      photo: photoUrl,
+      category,
+    });
+
+    const saveProduct = await newProduct.save();
+
+    return res
+      .status(200)
+      .json({ message: "Producto creado", status: true, saveProduct });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.log(error);
+    res
+      .status(500)
+      .json({ message: "Error interno en el servidor", status: false });
   }
 };
 
@@ -47,8 +66,18 @@ export const updateProduct = async (req, res) => {
 // Eliminar un producto
 export const deleteProduct = async (req, res) => {
   try {
-    await Product.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: "Producto eliminado" });
+    const { idProduct } = req.params;
+
+    if (!idProduct) {
+      return res.status(404).json({
+        message: "Selecciona el producto que deseas eliminar",
+        status: false,
+      });
+    }
+
+    const deleteProduct = await Product.findByIdAndDelete(idProduct);
+
+    res.status(200).json({ message: "Producto eliminado", deleteProduct });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
