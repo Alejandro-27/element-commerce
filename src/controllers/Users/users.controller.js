@@ -124,3 +124,28 @@ export const login = async (req, res) => {
   }
 };
 
+/**
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ */
+
+export const logout = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Busca al usuario por su email
+    const user = await Users.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado", status: false });
+    }
+
+    // Actualiza el token_temp del usuario
+    await Users.updateOne({ _id: user._id }, { token_temp: 0 });
+
+    return res.json({ message: "Sesión cerrada", status: true });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error interno en el servidor", status: false });
+  }
+};
+

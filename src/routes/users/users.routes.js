@@ -3,7 +3,11 @@ import multer from "multer";
 import path from "path";
 import { verifyToken } from "../../middleware/tokenValitador";
 
-import { register, login } from "../../controllers/Users/users.controller";
+import {
+  register,
+  login,
+  logout,
+} from "../../controllers/Users/users.controller";
 const router = Router();
 
 const upload = multer({
@@ -13,8 +17,10 @@ const upload = multer({
   },
 });
 
-router.post("/register", upload.single("photo"), register);
+router.post("/register", upload.single("photo"), register); //! Crear cuenta
 
-router.post("/login", login);
+router.post("/login", login); //! Inniciar sección
+
+router.post("/logout", logout) //! Cerrar sección
 
 export default router;
