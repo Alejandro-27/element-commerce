@@ -1,5 +1,7 @@
 import Product from "../../models/Products/Product";
 import { uploadFile } from "../../middleware/tools/firebase";
+
+
 // Crear un nuevo producto
 export const createProduct = async (req, res) => {
   try {

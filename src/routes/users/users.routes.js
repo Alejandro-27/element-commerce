@@ -11,7 +11,7 @@ import {
 const router = Router();
 
 const upload = multer({
-  dest: path.join("storage/user"),
+  dest: path.join("storage/users"),
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   },

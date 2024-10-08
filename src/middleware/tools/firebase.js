@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBl9usGcnKQ5D8frcF8BjsqH-hEd-cJlz8",
-  authDomain: "element-1871c.firebaseapp.com",
-  projectId: "element-1871c",
-  storageBucket: "element-1871c.appspot.com",
-  messagingSenderId: "244606989154",
-  appId: "1:244606989154:web:7d6bc32861e8fcffde723b",
-  measurementId: "G-YEKXWXTBY6",
+  apiKey: "AIzaSyC7jWCJ6X5hY5RegG41IyCUGTEuW8y7-l8",
+  authDomain: "elemet-commerce.firebaseapp.com",
+  projectId: "elemet-commerce",
+  storageBucket: "elemet-commerce.appspot.com",
+  messagingSenderId: "190062651462",
+  appId: "1:190062651462:web:a7d780f1d4021567788247",
+  measurementId: "G-M3W3BXMVZL"
 };
 
 // Initialize Firebase
