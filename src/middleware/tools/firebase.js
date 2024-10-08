@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC7jWCJ6X5hY5RegG41IyCUGTEuW8y7-l8",
@@ -16,9 +16,18 @@ const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 
 export async function uploadFile(file, fileName) {
-  const storageRef = ref(storage, `uploads/${fileName}`); // Almacena el archivo en la carpeta 'uploads'
-  const snapshot = await uploadBytes(storageRef, file);
-  const downloadURL = await getDownloadURL(snapshot.ref); // Obtén la URL de descarga
+  try {
+    const storageRef = ref(storage, `uploads/${fileName}`); // Define la ruta en el storage de Firebase
+    await uploadBytes(storageRef, file); // Sube el archivo
 
-  return downloadURL; // Retorna la URL de la imagen subida
+    // Construir manualmente el link de visualización
+    const storageBucket = firebaseConfig.storageBucket;
+    const encodedPath = encodeURIComponent(storageRef.fullPath); // Codifica el path para URL
+    const visualizationLink = `https://firebasestorage.googleapis.com/v0/b/${storageBucket}/o/${encodedPath}?alt=media`;
+
+    return visualizationLink; // Retorna el link de visualización
+  } catch (error) {
+    console.error("Error subiendo el archivo:", error);
+    throw error;
+  }
 }
