@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
-    user: { _id: String, name: String, email: String, photo: String },
-    name: {
+    user: { _id: String, name: String, email: String, photo: Array },
+    nameProduct: {
       type: String,
       required: true,
     },
@@ -14,7 +14,7 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    photo: {
+    photoProduct: {
       type: Array,
     },
     stock: { // Cantidad

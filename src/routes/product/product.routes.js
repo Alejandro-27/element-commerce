@@ -19,13 +19,13 @@ const upload = multer({
 });
 
 //! Crear un nuevo producto
-router.post("/createProduct", upload.single("photo"), createProduct); 
+router.post("/createProduct", upload.single("photoProduct"), verifyToken, createProduct); 
 
 //! Obtener todos los productos
 router.get("/getProducts", Paginate, getProducts);
 
 //! Actualizar un producto
-router.put("/:id", updateProduct);
+router.put("/updateProduct/:idProduct", upload.single("photoProduct"), verifyToken, updateProduct);
 
 //! Eliminar un producto
 router.delete("/deleteProduct/:idProduct", deleteProduct);

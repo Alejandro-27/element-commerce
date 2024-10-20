@@ -2,10 +2,6 @@ import Users from "../../models/Users/Users";
 import jwt from "jsonwebtoken";
 import config from "../../config";
 import { uploadFile } from "../../middleware/tools/firebase";
-/**
- * @param {import('express').Request} req
- * @param {import('express').Response} res
- */
 
 export const register = async (req, res) => {
   try {
