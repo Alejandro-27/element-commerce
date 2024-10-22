@@ -8,6 +8,7 @@ import {
   getProducts,
   updateProduct,
   deleteProduct,
+  getProductsByCategory
 } from "../../controllers/Products/product.controller.js";
 const router = Router();
 
@@ -29,5 +30,8 @@ router.put("/updateProduct/:idProduct", upload.single("photoProduct"), verifyTok
 
 //! Eliminar un producto
 router.delete("/deleteProduct/:idProduct", deleteProduct);
+
+//! Trae todos los productos de una categoría 
+router.get('/products/category/:category', getProductsByCategory);
 
 export default router;

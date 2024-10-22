@@ -8,12 +8,12 @@ export const createProduct = async (req, res) => {
     const { nameProduct, description, price, category } = req.body;
     const photoProduct = req.file;
 
-    if (!nameProduct || !description || !price || !photoProduct || !category) {
-      return res.status(404).json({
-        message: "Complete todos los datos para crear el producto",
-        status: false,
-      });
-    }
+    // if (!nameProduct || !description || !price || !photoProduct || !category) {
+    //   return res.status(404).json({
+    //     message: "Complete todos los datos para crear el producto",
+    //     status: false,
+    //   });
+    // }
 
     // Sube la imagen a Firebase Storage
     let photoUrl = "";
@@ -54,15 +54,27 @@ export const createProduct = async (req, res) => {
 };
 
 
-// Obtener todos los productos
+//! Obtener todos los productos
 export const getProducts = async (req, res) => {
   try {
-    const products = await Product.find();
-    res.status(200).json(products);
+    const products = await Product.find(); 
+    res.status(200).json(products); 
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
+//! Trae los productos por categorias
+export const getProductsByCategory = async (req, res) => {
+  const { category } = req.params;
+  try {
+    const products = await Product.find({ category });
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener los productos por categoría', error });
+  }
+};
+
 
 // Actualizar un producto
 export const updateProduct = async (req, res) => {
