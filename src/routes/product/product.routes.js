@@ -8,10 +8,7 @@ import {
   getAllProducts,
   updateProduct,
   deleteProduct,
-  getProductsByCategory,
-  getProductById,
-  getProductByPrice,
-  getProductos,
+  getProductsFilter,
 } from "../../controllers/Products/product.controller.js";
 const router = Router();
 
@@ -34,16 +31,9 @@ router.put("/updateProduct/:idProduct", upload.single("photoProduct"), verifyTok
 //! Eliminar un producto
 router.delete("/deleteProduct/:idProduct", deleteProduct);
 
-//! Trae todos los productos de una categoría 
-router.get('/products/category/:category', getProductsByCategory);
 
-//! Trae un producto por el id
-router.get('/products/id/:productId', getProductById);
-
-//! Trae un producto por el precio
-router.get('/products/price/:price', getProductByPrice);
 
 //! Ruta para obtener los productos con diferentes filtros
-router.get('/products', getProductos);
+router.get('/products', getProductsFilter);
 
 export default router;

@@ -132,54 +132,8 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
-//! Trae los productos por categorias
-export const getProductsByCategory = async (req, res) => {
-  const { category } = req.params;
-  try {
-    const products = await Product.find({ category });
-    res.status(200).json(products);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error al obtener los productos por categoría", error });
-  }
-};
 
-//! Trer un producto pro id
-export const getProductById = async (req, res) => {
-  const { productId } = req.params;
-  try {
-    const product = await Product.findById(productId);
-    if (!product) {
-      return res.status(404).json({ message: "Producto no encontrado" });
-    }
-    res.status(200).json(product);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error al obtener el producto por ID", error });
-  }
-};
-
-//! Trae un producto por el precio
-export const getProductByPrice = async (req, res) => {
-  const { price } = req.params;
-  try {
-    const product = await Product.find({ price });
-    if (!product) {
-      return res.status(404).json({ message: "Producto no encontrado" });
-    }
-    res.status(200).json(product);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error al obtener el producto por el precio", error });
-  }
-};
-
-//! Traer un producto poe el nombre
-
-export const getProductos = async (req, res) => {
+export const getProductsFilter = async (req, res) => {
   const { productId, category, nameProduct, minPrice, maxPrice } = req.query; // Obtén los parámetros de la query
 
   try {
