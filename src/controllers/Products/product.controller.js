@@ -132,7 +132,7 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
-
+//! Obtener todos los productos por filtros
 export const getProductsFilter = async (req, res) => {
   const { productId, category, nameProduct, minPrice, maxPrice } = req.query; // Obtén los parámetros de la query
 
