@@ -122,6 +122,28 @@ export const updateProduct = async (req, res) => {
   }
 };
 
+
+//! Eliminar un producto
+export const deleteProduct = async (req, res) => {
+  try {
+    const { idProduct } = req.params;
+
+    if (!idProduct) {
+      return res.status(404).json({
+        message: "Selecciona el producto que deseas eliminar",
+        status: false,
+      });
+    }
+
+    const deleteProduct = await Product.findByIdAndDelete(idProduct);
+
+    res.status(200).json({ message: "Producto eliminado", deleteProduct });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 //! Obtener todos los productos
 export const getAllProducts = async (req, res) => {
   try {
@@ -198,22 +220,37 @@ export const getProductsFilter = async (req, res) => {
   }
 };
 
-//! Eliminar un producto
-export const deleteProduct = async (req, res) => {
-  try {
-    const { idProduct } = req.params;
+//! Calificar un producto
+export const rateProduct = async (req, res) => {
+  const { productId } = req.params;
+  const { score } = req.body;
+  const userId = req.user.id; // El ID del usuario obtenido del token
 
-    if (!idProduct) {
-      return res.status(404).json({
-        message: "Selecciona el producto que deseas eliminar",
-        status: false,
-      });
+  try {
+    // Buscar el producto por ID
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: "Producto no encontrado" });
     }
 
-    const deleteProduct = await Product.findByIdAndDelete(idProduct);
+    // Verificar si el usuario ya ha calificado el producto
+    const existingRating = product.ratings.find((rating) => rating.userId === userId);
+    if (existingRating) {
+      return res.status(400).json({ message: "El usuario ya ha calificado este producto" });
+    }
 
-    res.status(200).json({ message: "Producto eliminado", deleteProduct });
+    // Agregar la nueva calificación
+    product.ratings.push({ userId, score });
+
+    // Calcular el promedio de las calificaciones
+    const totalScores = product.ratings.reduce((acc, rating) => acc + rating.score, 0);
+    product.qualification = totalScores / product.ratings.length;
+
+    // Guardar los cambios en la base de datos
+    await product.save();
+
+    res.status(200).json({ message: "Calificación agregada con éxito", product });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "Error al calificar el producto", error });
   }
 };
