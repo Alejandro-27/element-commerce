@@ -134,7 +134,15 @@ export const getAllProducts = async (req, res) => {
 
 //! Obtener todos los productos por filtros
 export const getProductsFilter = async (req, res) => {
-  const { productId, category, nameProduct, minPrice, maxPrice } = req.query; // Obtén los parámetros de la query
+  const {
+    productId,
+    category,
+    nameProduct,
+    minPrice,
+    maxPrice,
+    page = 1,
+    limit = 10,
+  } = req.query;
 
   try {
     let filter = {};
@@ -146,12 +154,12 @@ export const getProductsFilter = async (req, res) => {
 
     // Filtrar por categoría si se proporciona
     if (category) {
-      filter.category = new RegExp(category, 'i'); // Búsqueda insensible a mayúsculas
+      filter.category = new RegExp(category, "i"); // Búsqueda insensible a mayúsculas
     }
 
     // Filtrar por nombre del producto si se proporciona
     if (nameProduct) {
-      filter.nameProduct = new RegExp(nameProduct, 'i'); // Búsqueda insensible a mayúsculas
+      filter.nameProduct = new RegExp(nameProduct, "i"); // Búsqueda insensible a mayúsculas
     }
 
     // Filtrar por precio si se proporciona
@@ -165,20 +173,30 @@ export const getProductsFilter = async (req, res) => {
       }
     }
 
-    // Buscar productos en la base de datos con los filtros aplicados
-    const products = await Product.find(filter);
+    // Convertir `page` y `limit` a números
+    const pageNumber = parseInt(page, 10);
+    const limitNumber = parseInt(limit, 10);
 
-    // Verificar si se encontraron productos
-    if (!products.length) {
-      return res.status(404).json({ message: "No se encontraron productos" });
-    }
+    // Calcular el número de documentos que se deben saltar
+    const skip = (pageNumber - 1) * limitNumber;
 
-    res.status(200).json(products);
+    // Buscar productos en la base de datos con los filtros aplicados y aplicar paginación
+    const products = await Product.find(filter).skip(skip).limit(limitNumber);
+
+    // Contar el total de documentos que cumplen con los filtros
+    const totalProducts = await Product.countDocuments(filter);
+
+    // Responder con los productos, el total y la información de paginación
+    res.status(200).json({
+      products,
+      totalPages: Math.ceil(totalProducts / limitNumber),
+      currentPage: pageNumber,
+      totalProducts,
+    });
   } catch (error) {
     res.status(500).json({ message: "Error al obtener los productos", error });
   }
 };
-
 
 //! Eliminar un producto
 export const deleteProduct = async (req, res) => {
