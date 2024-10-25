@@ -9,6 +9,7 @@ import {
   updateProduct,
   deleteProduct,
   getProductsFilter,
+  rateProduct,
 } from "../../controllers/Products/product.controller.js";
 const router = Router();
 
@@ -31,9 +32,10 @@ router.put("/updateProduct/:idProduct", upload.single("photoProduct"), verifyTok
 //! Eliminar un producto
 router.delete("/deleteProduct/:idProduct", deleteProduct);
 
-
-
 //! Ruta para obtener los productos con diferentes filtros
 router.get('/products', getProductsFilter);
+
+//! Calificar un producto 
+router.post('/rate/:productId', verifyToken, rateProduct);
 
 export default router;
