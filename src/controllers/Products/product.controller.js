@@ -8,35 +8,25 @@ export const createProduct = async (req, res) => {
     const { nameProduct, description, price, category } = req.body;
     const photoProduct = req.file;
 
-    // if (!nameProduct || !description || !price || !photoProduct || !category) {
-    //   return res.status(404).json({
-    //     message: "Complete todos los datos para crear el producto",
-    //     status: false,
-    //   });
-    // }
-
-    // Sube la imagen a Firebase Storage
     let photoUrl = "";
     if (photoProduct) {
+      const folderPath = `products/${category || "general"}`; // Usa la categoría o una carpeta por defecto
       const fileName = `${Date.now()}_${photoProduct.originalname}`; // Define un nombre único para el archivo
-      photoUrl = await uploadFile(photoProduct.buffer, fileName); // Sube el archivo y recibe la URL
+      photoUrl = await uploadFile(photoProduct.buffer, folderPath, fileName); // Sube el archivo y recibe la URL
     }
 
-    // Verifica si req.user está definido
     if (!req.user) {
       return res.status(401).json({ message: "Usuario no autenticado" });
     }
 
     const { _id, name, email, photo } = req.user;
-    //const arrayCategory = JSON.parse(category);
-
+    
     const newProduct = new Product({
       nameProduct,
       description,
       price,
       photoProduct: photoUrl,
       category,
-      //category: arrayCategory,
       user: { _id, name, email, photo },
     });
 

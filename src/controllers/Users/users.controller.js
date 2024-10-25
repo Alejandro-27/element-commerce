@@ -26,8 +26,9 @@ export const register = async (req, res) => {
     // Sube la imagen a Firebase Storage
     let photoUrl = "";
     if (file) {
+      const folderPath = `users/${email}`; // Define una subcarpeta para cada usuario
       const fileName = `${Date.now()}_${file.originalname}`; // Define un nombre único para el archivo
-      photoUrl = await uploadFile(file.buffer, fileName); // Sube el archivo y recibe la URL
+      photoUrl = await uploadFile(file.buffer, folderPath, fileName); // Sube el archivo y recibe la URL
     }
 
     // Encripta la contraseña
@@ -52,6 +53,7 @@ export const register = async (req, res) => {
       .json({ message: "Error interno en el servidor", status: false });
   }
 };
+
 
 /**
  * @param {import('express').Request} req

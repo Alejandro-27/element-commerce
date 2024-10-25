@@ -17,8 +17,9 @@ const storage = getStorage(app);
 
 export async function uploadFile(file, fileName) {
   try {
-    const storageRef = ref(storage, `uploads/${fileName}`); // Define la ruta en el storage de Firebase
-    await uploadBytes(storageRef, file); // Sube el archivo
+    const storageRef = ref(storage, fileName);
+    await uploadBytes(storageRef, file);
+    console.log("Archivo subido correctamente");
 
     // Construir manualmente el link de visualización
     const storageBucket = firebaseConfig.storageBucket;
