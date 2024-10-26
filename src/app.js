@@ -30,6 +30,9 @@ import Product from "./routes/product/product.routes.js";
 //! RUTAS DE USUARIOS
 import Users from "./routes/users/users.routes.js"
 
+//! RUTAS DE ORDENES
+import Order from "./routes/users/order.routes.js"
+
 //! RUTAS DE PRODUCTOS
 app.use("/api/products", Product);
 
@@ -37,5 +40,7 @@ app.use("/api/products", Product);
 //! RUTAS DE USUARIOS
 app.use("/api/users", Users)
 
+//! RUTAS DE ORDENES
+app.use("/api/orders", Order)
 
 export default app;

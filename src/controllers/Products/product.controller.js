@@ -2,17 +2,25 @@ import Product from "../../models/Products/Product";
 import { uploadFile } from "../../middleware/tools/firebase";
 import Users from "../../models/Users/Users";
 
-// Crear un nuevo producto
+//! Crear un nuevo producto
 export const createProduct = async (req, res) => {
   try {
-    const { nameProduct, description, price, category } = req.body;
+    const { nameProduct, description, price, category, stock } = req.body;
     const photoProduct = req.file;
+
+    // Validación de entrada
+    if (!nameProduct || !description || !price || !category) {
+      return res.status(400).json({
+        message: "Complete todos los datos requeridos para crear el producto",
+        status: false,
+      });
+    }
 
     let photoUrl = "";
     if (photoProduct) {
-      const folderPath = `products/${category || "general"}`; // Usa la categoría o una carpeta por defecto
-      const fileName = `${Date.now()}_${photoProduct.originalname}`; // Define un nombre único para el archivo
-      photoUrl = await uploadFile(photoProduct.buffer, folderPath, fileName); // Sube el archivo y recibe la URL
+      const folderPath = `products/${category || "general"}`;
+      const fileName = `${Date.now()}_${photoProduct.originalname}`;
+      photoUrl = await uploadFile(photoProduct.buffer, folderPath, fileName);
     }
 
     if (!req.user) {
@@ -20,13 +28,17 @@ export const createProduct = async (req, res) => {
     }
 
     const { _id, name, email, photo } = req.user;
-    
+
+    // Validación y asignación de 'stock' con valor predeterminado
+    const validStock = stock && !isNaN(stock) ? Number(stock) : 1;
+
     const newProduct = new Product({
       nameProduct,
       description,
       price,
       photoProduct: photoUrl,
       category,
+      stock: validStock, // Almacena 'stock' de forma segura
       user: { _id, name, email, photo },
     });
 
@@ -36,12 +48,13 @@ export const createProduct = async (req, res) => {
       .status(200)
       .json({ message: "Producto creado", status: true, saveProduct });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res
       .status(500)
       .json({ message: "Error interno en el servidor", status: false });
   }
 };
+
 
 //! Actualizar un producto
 export const updateProduct = async (req, res) => {
@@ -112,7 +125,6 @@ export const updateProduct = async (req, res) => {
   }
 };
 
-
 //! Eliminar un producto
 export const deleteProduct = async (req, res) => {
   try {
@@ -132,7 +144,6 @@ export const deleteProduct = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 //! Obtener todos los productos
 export const getAllProducts = async (req, res) => {
@@ -224,22 +235,31 @@ export const rateProduct = async (req, res) => {
     }
 
     // Verificar si el usuario ya ha calificado el producto
-    const existingRating = product.ratings.find((rating) => rating.userId === userId);
+    const existingRating = product.ratings.find(
+      (rating) => rating.userId === userId
+    );
     if (existingRating) {
-      return res.status(400).json({ message: "El usuario ya ha calificado este producto" });
+      return res
+        .status(400)
+        .json({ message: "El usuario ya ha calificado este producto" });
     }
 
     // Agregar la nueva calificación
     product.ratings.push({ userId, score });
 
     // Calcular el promedio de las calificaciones
-    const totalScores = product.ratings.reduce((acc, rating) => acc + rating.score, 0);
+    const totalScores = product.ratings.reduce(
+      (acc, rating) => acc + rating.score,
+      0
+    );
     product.qualification = totalScores / product.ratings.length;
 
     // Guardar los cambios en la base de datos
     await product.save();
 
-    res.status(200).json({ message: "Calificación agregada con éxito", product });
+    res
+      .status(200)
+      .json({ message: "Calificación agregada con éxito", product });
   } catch (error) {
     res.status(500).json({ message: "Error al calificar el producto", error });
   }

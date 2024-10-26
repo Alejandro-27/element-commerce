@@ -26,7 +26,8 @@ const userShema = new Schema(
         dateNumber: { type: String, default: "" },
       },
     ],
-    admin: { type: String, default: "usuario" },
+    //admin: { type: String, default: "usuario" },
+    role: { type: String, enum: ["usuario", "admin"], default: "usuario" },
   },
   { timestamps: true }
 );
