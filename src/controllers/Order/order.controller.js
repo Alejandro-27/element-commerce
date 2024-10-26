@@ -187,29 +187,37 @@ export const createOrder = async (req, res) => {
   
   //! Obtener una lista de pedidos de un usuario
   export const getOrdersByUser = async (req, res) => {
+    const { page = 1, limit = 10 } = req.query;
+  
     try {
-      const { page = 1, limit = 10 } = req.query;
+      const userId = req.user._id; // ID del usuario autenticado
   
-      // Obtener el ID del usuario autenticado desde el token
-      const userId = req.user._id;
+      // Convertir `page` y `limit` a números
+      const pageNumber = parseInt(page, 10);
+      const limitNumber = parseInt(limit, 10);
   
-      // Obtener las ordenes del usuario
+      // Calcular el número de documentos que se deben saltar
+      const skip = (pageNumber - 1) * limitNumber;
+  
+      // Buscar órdenes del usuario y aplicar paginación
       const orders = await Order.find({ "user._id": userId })
         .sort({ createdAt: -1 })
-        .skip((page - 1) * limit)
-        .limit(limit);
+        .skip(skip)
+        .limit(limitNumber);
   
-      if (!orders || orders.length === 0) {
-        return res.status(404).json({ message: 'No se encontraron órdenes para este usuario' });
-      }
+      // Contar el total de órdenes del usuario
+      const totalOrders = await Order.countDocuments({ "user._id": userId });
   
+      // Responder con las órdenes, el total y la información de paginación
       res.status(200).json({
-        message: 'Órdenes obtenidas exitosamente',
         orders,
+        totalPages: Math.ceil(totalOrders / limitNumber),
+        currentPage: pageNumber,
+        totalOrders,
       });
     } catch (error) {
-      console.error(error); // Mostrar el error en la consola
-      res.status(500).json({ message: 'Error al obtener las órdenes' });
+      console.error(error);
+      res.status(500).json({ message: "Error al obtener las órdenes", error });
     }
   };
   
