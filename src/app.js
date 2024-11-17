@@ -33,8 +33,14 @@ import Users from "./routes/users/users.routes.js"
 //! RUTAS DE ORDENES
 import Order from "./routes/users/order.routes.js"
 
+//! RUTAS DEL CARRITO DE COMPRA
+import ShoppingCart from "./routes/ShoppingCart/ShoppingCart.routes.js";
+
 //! RUTAS DE PRODUCTOS
 app.use("/api/products", Product);
+
+//! RUTAS DEL CARRITO DE COMPRA
+app.use("/api/shoppingCart", ShoppingCart);
 
 
 //! RUTAS DE USUARIOS
@@ -42,5 +48,6 @@ app.use("/api/users", Users)
 
 //! RUTAS DE ORDENES
 app.use("/api/orders", Order)
+
 
 export default app;
