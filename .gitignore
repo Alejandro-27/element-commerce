@@ -172,3 +172,13 @@ dist
 
 # Finder (MacOS) folder config
 .DS_Store
+
+# Archivos subidos dinámicamente por usuarios (Multer/Sharp)
+uploads/*
+!uploads/.gitkeep
+
+# Almacenamiento local de datos de Docker (por si se crea localmente fuera del volumen)
+mongo_data/
+
+# IDE / Editores
+.vscode/

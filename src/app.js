@@ -1,53 +1,48 @@
-import express from "express";
-import morgan from "morgan";
-import cors from "cors";
-import config from "./config";
-import dotenv from "dotenv";
-dotenv.config();
+import express from 'express';
+import helmet from 'helmet';
+import cors from 'cors';
+import compression from 'compression';
+import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
 
-
-//! Conecta a la base de datos
-import initDB from "./config/database.js";
-initDB();
+// Importación de rutas
+import productRoutes from './routes/product/product.routes.js';
+import userRoutes from './routes/users/users.routes.js';
+import orderRoutes from './routes/users/order.routes.js';
+import cartRoutes from './routes/ShoppingCart/ShoppingCart.routes.js';
 
 const app = express();
-console.log(config);
 
-app.get("/", (req, res) => {
-  res.send("hola,  probando desde aqui 🫡");
-  return;
+// 1. Middlewares de Seguridad y Red
+app.use(helmet());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    credentials: true, // Requerido para transferir Cookies HttpOnly con JWT
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  })
+);
+
+// 2. Middlewares de Rendimiento y Parseo
+app.use(compression());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(cookieParser());
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
+// 3. Healthcheck Endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', uptime: process.uptime() });
 });
 
-app.set("port", config.PORT);
-app.use(cors());
-
-app.use(express.json());
-app.use(morgan("dev"));
-
-//! RUTAS DE PRODUCTOS
-import Product from "./routes/product/product.routes.js";
-
-//! RUTAS DE USUARIOS
-import Users from "./routes/users/users.routes.js"
-
-//! RUTAS DE ORDENES
-import Order from "./routes/users/order.routes.js"
-
-//! RUTAS DEL CARRITO DE COMPRA
-import ShoppingCart from "./routes/ShoppingCart/ShoppingCart.routes.js";
-
-//! RUTAS DE PRODUCTOS
-app.use("/api/products", Product);
-
-//! RUTAS DEL CARRITO DE COMPRA
-app.use("/api/shoppingCart", ShoppingCart);
-
-
-//! RUTAS DE USUARIOS
-app.use("/api/users", Users)
-
-//! RUTAS DE ORDENES
-app.use("/api/orders", Order)
-
+// 4. Montaje de Rutas de la API REST
+app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/shoppingCart', cartRoutes);
 
 export default app;

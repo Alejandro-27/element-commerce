@@ -1,0 +1,19 @@
+meta {
+  name: Vaciar carrito
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:2000/api/shoppingCart/emptyCart
+  body: none
+  auth: none
+}
+
+params:query {
+  ~: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2EzODUxMzljOTE1ZGJhNmZhYzQ0NyIsIm5hbWUiOiJBbGVqYW5kcm8gR8OzbWV6IiwiZW1haWwiOiJnb21lekBnbWFpbC5jb20iLCJpYXQiOjE3MzE4Njg3ODUsImV4cCI6MTc2MzQwNDc4NX0.QCrxZ3YUghfrukf0zoyxH_HJhSnAezRefNpPxHpAw9I
+}
+
+headers {
+  x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2EzODUxMzljOTE1ZGJhNmZhYzQ0NyIsIm5hbWUiOiJBbGVqYW5kcm8gR8OzbWV6IiwiZW1haWwiOiJnb21lekBnbWFpbC5jb20iLCJpYXQiOjE3MzE4Njg3ODUsImV4cCI6MTc2MzQwNDc4NX0.QCrxZ3YUghfrukf0zoyxH_HJhSnAezRefNpPxHpAw9I
+}

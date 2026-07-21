@@ -1,0 +1,15 @@
+meta {
+  name: Trae las odenes de un usuario
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:2000/api/orders/getOrdersByUser
+  body: none
+  auth: none
+}
+
+headers {
+  x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MWJjOTMwMDMxNzA0YWJjODRiYzNhNiIsIm5hbWUiOiJHw7NtZXoiLCJlbWFpbCI6ImdvbWV6QGdtYWlsLmNvbSIsImlhdCI6MTcyOTk1ODI2MiwiZXhwIjoxNzYxNDk0MjYyfQ.TDJvTC5g33AJFj0a9fL-_mBcINJOCS2Js62dU-oQc6g
+}

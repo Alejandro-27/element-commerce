@@ -1,0 +1,25 @@
+meta {
+  name: Register
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:2000/api/users/register
+  body: multipartForm
+  auth: none
+}
+
+headers {
+  : Alejandro Gómez
+  : 
+  : 
+  : 
+}
+
+body:multipart-form {
+  name: Alejandro
+  email: alejandro@gmail.com
+  photo: @file(postman-cloud:///1ef43cf1-e67b-48e0-a737-6c5ce4da1f6d)
+  password: 123456789
+}

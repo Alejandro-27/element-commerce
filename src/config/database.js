@@ -1,23 +1,17 @@
 import mongoose from 'mongoose';
 
-//! Configura strictQuery en true para suprimir la advertencia
-mongoose.set('strictQuery', true);
 const connectDB = async () => {
   try {
-    const uri = process.env.MONGO_URI;  // Cambia MONGO_URL por MONGO_URI
+    const uri = process.env.MONGO_URI;
 
     if (!uri) {
-      throw new Error("MONGO_URI no está definida");
+      throw new Error('La variable de entorno MONGO_URI no está definida.');
     }
 
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-
-    console.log("Conexión a MongoDB exitosa");
+    const conn = await mongoose.connect(uri);
+    console.log(`[MongoDB] Conectado exitosamente: ${conn.connection.host}`);
   } catch (error) {
-    console.error("Error de conexión a MongoDB:", error);
+    console.error(`[Error MongoDB] Fallo de conexión: ${error.message}`);
     process.exit(1);
   }
 };

@@ -1,30 +1,30 @@
 {
-  "name": "element",
+  "name": "element-commerce-backend",
   "version": "1.0.0",
-  "description": "E-commerce backend using Bun and JavaScript",
+  "description": "E-commerce backend profesional utilizando Bun.js, Express y MongoDB",
   "type": "module",
   "main": "src/server.js",
   "scripts": {
-    "dev": "nodemon --exec bun run src/server.js"
+    "dev": "bun --watch src/server.js",
+    "start": "bun src/server.js"
   },
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
+    "express": "^4.19.2",
+    "express-validator": "^7.1.0",
     "firebase": "^10.13.2",
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^6.7.0",
+    "mongoose": "^8.4.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "node-localstorage": "^3.0.5",
-    "nodemon": "^3.1.7",
     "sharp": "^0.33.5",
     "stripe": "^16.12.0"
   },
-  "devDependencies": {},
   "engines": {
-    "bun": "latest"
+    "bun": ">=1.0.0"
   }
 }

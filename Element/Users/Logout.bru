@@ -1,0 +1,21 @@
+meta {
+  name: Logout
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:2000/api/users/logout
+  body: json
+  auth: none
+}
+
+headers {
+  ~x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjQ3YTZjYzVmNjNhYjQwZjIyNmMyZiIsIm5hbWUiOiJBbGVqYW5kcm8iLCJlbWFpbCI6ImFsZWphbmRyb0BnbWFpbC5jb20iLCJhZG1pbiI6InVzdWFyaW8iLCJpYXQiOjE3MjczODc5OTYsImV4cCI6MTc1ODkyMzk5Nn0.70rOR8cR9XYyo-ynaT7WQCtAgyhQVoxFABlfU6cQRbo
+}
+
+body:json {
+  {
+      "email": "alejandro@gmail.com"
+  }
+}

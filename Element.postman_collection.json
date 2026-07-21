@@ -1,0 +1,650 @@
+{
+  "info": {
+    "_postman_id": "a1140a3a-966f-49b3-87b7-f402a5beed76",
+    "name": "Element",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29005293"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "value": "Alejandro Gómez",
+                "type": "text"
+              },
+              {
+                "key": "",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "",
+                "value": "",
+                "type": "text"
+              },
+              {
+                "key": "",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Alejandro",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "alejandro@gmail.com",
+                  "type": "text"
+                },
+                {
+                  "key": "photo",
+                  "type": "file",
+                  "src": "postman-cloud:///1ef43cf1-e67b-48e0-a737-6c5ce4da1f6d"
+                },
+                {
+                  "key": "password",
+                  "value": "123456789",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:2000/api/users/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "2000",
+              "path": [
+                "api",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"alejandro@gmail.com\",\r\n    \"password\": \"123456789\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:2000/api/users/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "2000",
+              "path": [
+                "api",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-access-token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjQ3YTZjYzVmNjNhYjQwZjIyNmMyZiIsIm5hbWUiOiJBbGVqYW5kcm8iLCJlbWFpbCI6ImFsZWphbmRyb0BnbWFpbC5jb20iLCJhZG1pbiI6InVzdWFyaW8iLCJpYXQiOjE3MjczODc5OTYsImV4cCI6MTc1ODkyMzk5Nn0.70rOR8cR9XYyo-ynaT7WQCtAgyhQVoxFABlfU6cQRbo",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"alejandro@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:2000/api/users/logout",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "2000",
+              "path": [
+                "api",
+                "users",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Crear producto",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Diritos",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "descripcion del producto",
+                  "type": "text"
+                },
+                {
+                  "key": "price",
+                  "value": "10000",
+                  "type": "text"
+                },
+                {
+                  "key": "photo",
+                  "type": "file",
+                  "src": "postman-cloud:///1ef43cf1-e67b-48e0-a737-6c5ce4da1f6d"
+                },
+                {
+                  "key": "category",
+                  "value": "Snaks",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:2000/api/products/createProduct",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "2000",
+              "path": [
+                "api",
+                "products",
+                "createProduct"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:2000/api/products/deleteProduct/66f719afa98308651328b672",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "2000",
+              "path": [
+                "api",
+                "products",
+                "deleteProduct",
+                "66f719afa98308651328b672"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar producto",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "idProduct",
+                  "value": "67036b96c705ad8c4ac609ba",
+                  "type": "text"
+                },
+                {
+                  "key": "name",
+                  "value": "nuevo nombre ",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "nueva desc",
+                  "type": "text"
+                },
+                {
+                  "key": "price",
+                  "value": "10000000",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "nueva categoria",
+                  "type": "text"
+                },
+                {
+                  "key": "photo",
+                  "type": "file",
+                  "src": "postman-cloud:///1ef5e4e6-ee73-4180-a900-51a334e73c18"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:2000/api/products/updateProduct",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "2000",
+              "path": [
+                "api",
+                "products",
+                "updateProduct"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getProducts",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "getProductos (filtros)",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Calificar un producto",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Order",
+      "item": [
+        {
+          "name": "Crear orden",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-access-token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MWJjOWNhZjJjZGVlM2E0YTlkNjMwZCIsIm5hbWUiOiJBbGVqYW5kcm8gR8OzbWV6IiwiZW1haWwiOiJhbGVqYW5kcm9nb21lekBnbWFpbC5jb20iLCJhZG1pbiI6InVzdWFyaW8iLCJpYXQiOjE3Mjk4NzQ0MjcsImV4cCI6MTc2MTQxMDQyN30.fzGQd7RQhnb7ggObQH5jBqX6Fa9Q__4EUoIpuvxP9Gc",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"items\": [\r\n    {\r\n      \"product\": \"671c56eaa4705aa08542ee24\",\r\n      \"quantity\": 2,\r\n      \"price\": 10000\r\n    }\r\n  ],\r\n  \"paymentInfo\": {\r\n    \"method\": \"Credit Card\",\r\n    \"transactionId\": \"txn_123456789\"\r\n  },\r\n  \"shippingAddress\": {\r\n    \"fullName\": \"John Doe\",\r\n    \"address\": \"123 Calle Falsa\",\r\n    \"city\": \"Ciudad\",\r\n    \"postalCode\": \"12345\",\r\n    \"country\": \"País\",\r\n    \"phone\": \"123456789\"\r\n  }\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:2000/api/orders/createOrder",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "2000",
+              "path": [
+                "api",
+                "orders",
+                "createOrder"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar orden",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "x-access-token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MWJjOWNhZjJjZGVlM2E0YTlkNjMwZCIsIm5hbWUiOiJBbGVqYW5kcm8gR8OzbWV6IiwiZW1haWwiOiJhbGVqYW5kcm9nb21lekBnbWFpbC5jb20iLCJhZG1pbiI6InVzdWFyaW8iLCJpYXQiOjE3Mjk4NzQ0MjcsImV4cCI6MTc2MTQxMDQyN30.fzGQd7RQhnb7ggObQH5jBqX6Fa9Q__4EUoIpuvxP9Gc",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"items\": [\r\n    {\r\n      \"product\": \"671c56eaa4705aa08542ee24\",\r\n      \"quantity\": 4,\r\n      \"price\": 10000\r\n    }\r\n  ],\r\n  \"paymentInfo\": {\r\n    \"method\": \"Credit Card\",\r\n    \"transactionId\": \"txn_123456789\"\r\n  },\r\n  \"shippingAddress\": {\r\n    \"fullName\": \"John Doe\",\r\n    \"address\": \"123 Calle Falsa\",\r\n    \"city\": \"Ciudad\",\r\n    \"postalCode\": \"12345\",\r\n    \"country\": \"País\",\r\n    \"phone\": \"123456789\"\r\n  }\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:2000/api/orders/editOrder/671c58a7515161571f09583e",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "2000",
+              "path": [
+                "api",
+                "orders",
+                "editOrder",
+                "671c58a7515161571f09583e"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar orden",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-access-token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MWJjOWNhZjJjZGVlM2E0YTlkNjMwZCIsIm5hbWUiOiJBbGVqYW5kcm8gR8OzbWV6IiwiZW1haWwiOiJhbGVqYW5kcm9nb21lekBnbWFpbC5jb20iLCJhZG1pbiI6InVzdWFyaW8iLCJpYXQiOjE3Mjk4NzQ0MjcsImV4cCI6MTc2MTQxMDQyN30.fzGQd7RQhnb7ggObQH5jBqX6Fa9Q__4EUoIpuvxP9Gc",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:2000/api/orders/deleteOrder/671c58a7515161571f09583e",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "2000",
+              "path": [
+                "api",
+                "orders",
+                "deleteOrder",
+                "671c58a7515161571f09583e"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener una orden",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-access-token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MWJjOWNhZjJjZGVlM2E0YTlkNjMwZCIsIm5hbWUiOiJBbGVqYW5kcm8gR8OzbWV6IiwiZW1haWwiOiJhbGVqYW5kcm9nb21lekBnbWFpbC5jb20iLCJhZG1pbiI6InVzdWFyaW8iLCJpYXQiOjE3Mjk4NzQ0MjcsImV4cCI6MTc2MTQxMDQyN30.fzGQd7RQhnb7ggObQH5jBqX6Fa9Q__4EUoIpuvxP9Gc",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:2000/api/orders/getOrder/671d0f71facf2be06a96d32f",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "2000",
+              "path": [
+                "api",
+                "orders",
+                "getOrder",
+                "671d0f71facf2be06a96d32f"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Trae las odenes de un usuario",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-access-token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MWJjOTMwMDMxNzA0YWJjODRiYzNhNiIsIm5hbWUiOiJHw7NtZXoiLCJlbWFpbCI6ImdvbWV6QGdtYWlsLmNvbSIsImlhdCI6MTcyOTk1ODI2MiwiZXhwIjoxNzYxNDk0MjYyfQ.TDJvTC5g33AJFj0a9fL-_mBcINJOCS2Js62dU-oQc6g",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:2000/api/orders/getOrdersByUser",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "2000",
+              "path": [
+                "api",
+                "orders",
+                "getOrdersByUser"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ShoppingCart",
+      "item": [
+        {
+          "name": "Agregar al carrito",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-access-token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2EzODUxMzljOTE1ZGJhNmZhYzQ0NyIsIm5hbWUiOiJBbGVqYW5kcm8gR8OzbWV6IiwiZW1haWwiOiJnb21lekBnbWFpbC5jb20iLCJpYXQiOjE3MzE4Njg3ODUsImV4cCI6MTc2MzQwNDc4NX0.QCrxZ3YUghfrukf0zoyxH_HJhSnAezRefNpPxHpAw9I",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:2000/api/shoppingCart/addToCart",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "2000",
+              "path": [
+                "api",
+                "shoppingCart",
+                "addToCart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-access-token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2EzODUxMzljOTE1ZGJhNmZhYzQ0NyIsIm5hbWUiOiJBbGVqYW5kcm8gR8OzbWV6IiwiZW1haWwiOiJnb21lekBnbWFpbC5jb20iLCJpYXQiOjE3MzE4Njg3ODUsImV4cCI6MTc2MzQwNDc4NX0.QCrxZ3YUghfrukf0zoyxH_HJhSnAezRefNpPxHpAw9I",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": \"673a45f173d1ccbe95f968a0\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:2000/api/shoppingCart/removeFromCart",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "2000",
+              "path": [
+                "api",
+                "shoppingCart",
+                "removeFromCart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get carrito",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-access-token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2EzODUxMzljOTE1ZGJhNmZhYzQ0NyIsIm5hbWUiOiJBbGVqYW5kcm8gR8OzbWV6IiwiZW1haWwiOiJnb21lekBnbWFpbC5jb20iLCJpYXQiOjE3MzE4Njg3ODUsImV4cCI6MTc2MzQwNDc4NX0.QCrxZ3YUghfrukf0zoyxH_HJhSnAezRefNpPxHpAw9I",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:2000/api/shoppingCart/getCart",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "2000",
+              "path": [
+                "api",
+                "shoppingCart",
+                "getCart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Vaciar carrito",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "x-access-token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2EzODUxMzljOTE1ZGJhNmZhYzQ0NyIsIm5hbWUiOiJBbGVqYW5kcm8gR8OzbWV6IiwiZW1haWwiOiJnb21lekBnbWFpbC5jb20iLCJpYXQiOjE3MzE4Njg3ODUsImV4cCI6MTc2MzQwNDc4NX0.QCrxZ3YUghfrukf0zoyxH_HJhSnAezRefNpPxHpAw9I",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:2000/api/shoppingCart/emptyCart",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "2000",
+              "path": [
+                "api",
+                "shoppingCart",
+                "emptyCart"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2EzODUxMzljOTE1ZGJhNmZhYzQ0NyIsIm5hbWUiOiJBbGVqYW5kcm8gR8OzbWV6IiwiZW1haWwiOiJnb21lekBnbWFpbC5jb20iLCJpYXQiOjE3MzE4Njg3ODUsImV4cCI6MTc2MzQwNDc4NX0.QCrxZ3YUghfrukf0zoyxH_HJhSnAezRefNpPxHpAw9I",
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener todos los carritos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-access-token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3M2EzODUxMzljOTE1ZGJhNmZhYzQ0NyIsIm5hbWUiOiJBbGVqYW5kcm8gR8OzbWV6IiwiZW1haWwiOiJnb21lekBnbWFpbC5jb20iLCJpYXQiOjE3MzE4Njg3ODUsImV4cCI6MTc2MzQwNDc4NX0.QCrxZ3YUghfrukf0zoyxH_HJhSnAezRefNpPxHpAw9I",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:2000/api/shoppingCart/getCarts",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "2000",
+              "path": [
+                "api",
+                "shoppingCart",
+                "getCarts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
