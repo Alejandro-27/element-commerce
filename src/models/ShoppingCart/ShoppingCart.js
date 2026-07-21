@@ -1,56 +1,54 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+
 const { Schema } = mongoose;
 
-const CartSchema = new Schema(
+const cartItemSchema = new Schema(
   {
-    user: { _id: String, name: String, email: String, photo: Array },
-    items: [
-      {
-        product: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Product", // Referencia al modelo de producto
-          required: true,
-        },
-        quantity: { //! Cantidad del producto en el carrito
-          type: Number,
-          required: true,
-          min: 1,
-          default: 1,
-        },
-        price: {
-          type: Number,
-          required: true,
-        },
-        total: { //! Total del producto en el carrito
-          type: Number,
-          required: true,
-          default: function () {
-            return this.quantity * this.price;
-          },
-        },
-      },
-    ],
-    status: { //! Estado del carrito
-      type: String,
-      enum: ["active", "completed", "cancelled"],
-      default: "active",
+    product: {
+      type: Schema.Types.ObjectId,
+      ref: 'Product',
+      required: [true, 'El producto es obligatorio']
     },
-    totalAmount: { //! Total del carrito
+    quantity: {
       type: Number,
-      required: true,
-      default: 0,
+      required: [true, 'La cantidad es obligatoria'],
+      min: [1, 'La cantidad mínima es 1'],
+      default: 1
     },
+    // El precio unitario congelado temporalmente en la sesión del carrito
+    price: {
+      type: Number,
+      required: [true, 'El precio del producto es obligatorio']
+    }
   },
-  {
-    timestamps: true, 
-  }
+  { _id: true }
 );
 
-// Middleware para calcular el total del carrito antes de guardar
-CartSchema.pre("save", function (next) {
-  this.totalAmount = this.items.reduce((sum, item) => sum + item.total, 0);
+const cartSchema = new Schema(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: [true, 'El carrito debe pertenecer a un usuario'],
+      unique: true // Garantiza un único carrito activo por usuario
+    },
+    items: [cartItemSchema],
+    totalAmount: {
+      type: Number,
+      required: true,
+      default: 0
+    }
+  },
+  { timestamps: true }
+);
+
+// Middleware Pre-Save: Calcula el total del carrito dinámicamente
+cartSchema.pre('save', function (next) {
+  this.totalAmount = this.items.reduce((acc, item) => {
+    return acc + item.price * item.quantity;
+  }, 0);
   next();
 });
 
-const Cart = mongoose.model("Cart", CartSchema);
+const Cart = mongoose.model('Cart', cartSchema);
 export default Cart;
