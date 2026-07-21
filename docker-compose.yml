@@ -4,7 +4,7 @@ services:
   mongodb:
     image: mongo:latest
     container_name: element_commerce_db
-    restart: always
+    restart: "no"
     ports:
       - "27017:27017"
     environment:
@@ -16,7 +16,7 @@ services:
   mongo-express:
     image: mongo-express:latest
     container_name: element_commerce_ui
-    restart: always
+    restart: "no"
     ports:
       - "8081:8081"
     environment:
