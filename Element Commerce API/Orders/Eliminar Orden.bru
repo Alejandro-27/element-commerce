@@ -1,0 +1,15 @@
+meta {
+  name: Eliminar Orden
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseUrl}}/api/orders/deleteOrder/:id
+  body: none
+  auth: none
+}
+
+params:path {
+  id: ID_DE_LA_ORDEN_AQUI
+}

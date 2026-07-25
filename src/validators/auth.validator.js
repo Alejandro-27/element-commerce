@@ -1,6 +1,5 @@
 import { body, validationResult } from "express-validator";
 
-// Middleware auxiliar para capturar y responder los errores de validación
 const validateResult = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -15,15 +14,20 @@ const validateResult = (req, res, next) => {
   next();
 };
 
-// Validaciones para el Registro de Usuario
-
 export const registerValidator = [
-  body("name")
+  body("firstName")
     .trim()
     .notEmpty()
     .withMessage("El nombre es obligatorio")
     .isLength({ min: 2 })
     .withMessage("El nombre debe tener al menos 2 caracteres"),
+
+  body("lastName")
+    .trim()
+    .notEmpty()
+    .withMessage("El apellido es obligatorio")
+    .isLength({ min: 2 })
+    .withMessage("El apellido debe tener al menos 2 caracteres"),
 
   body("email")
     .trim()

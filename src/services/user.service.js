@@ -1,37 +1,34 @@
 import User from "../models/user.model.js";
-import { uploadFile } from "../config/firebase.js";
+import { uploadToCloudinary } from "../config/cloudinary.js";
 import { AppError } from "../utils/appError.js";
 
-//  Servicio para registrar un nuevo usuario
 
 export const registerUserService = async (userData, file) => {
-  const { name, email, password } = userData;
+  const { firstName, lastName, email, password } = userData;
 
-  // Verificar si el usuario ya existe
+  // Validar si ya existe el correo
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     throw new AppError("Ese correo ya se encuentra registrado", 400);
   }
 
-  // Subir avatar/foto a Firebase Storage si existe un archivo
-  let photoUrl = "";
+  // Subir avatar a Cloudinary si existe archivo
+  let avatarUrl = "";
   if (file) {
-    const folderPath = `users/${email}`;
-    const fileName = `${Date.now()}_${file.originalname}`;
-    photoUrl = await uploadFile(file.buffer, folderPath, fileName);
+    avatarUrl = await uploadToCloudinary(file.buffer, "element-commerce/users");
   }
 
-  // Crear el nuevo usuario
+  // Crear usuario directamente
   const newUser = await User.create({
-    name,
+    firstName,
+    lastName,
     email,
-    password, // La contraseña se encripta automáticamente con el hook pre('save') en user.model.js
-    photo: photoUrl,
+    password,
+    avatar: avatarUrl,
   });
 
   return newUser;
 };
-
 /**
  * Servicio para autenticar a un usuario
  */

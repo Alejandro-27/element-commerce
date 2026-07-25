@@ -1,5 +1,4 @@
 import { Router } from "express";
-import multer from "multer";
 import {
   register,
   login,
@@ -11,11 +10,16 @@ import {
   loginValidator,
 } from "../validators/auth.validator.js";
 import { protect } from "../middlewares/auth.middleware.js";
-
-const upload = multer({ storage: multer.memoryStorage() });
+import { uploadUserPhoto } from "../config/cloudinary.js";
 const router = Router();
 
-router.post("/register", upload.single("photo"), registerValidator, register);
+// Cambiamos 'upload.single' por 'uploadUserPhoto.single'
+router.post(
+  "/register",
+  uploadUserPhoto.single("avatar"),
+  registerValidator,
+  register,
+);
 router.post("/login", loginValidator, login);
 router.post("/logout", logout);
 

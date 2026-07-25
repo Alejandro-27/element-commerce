@@ -1,0 +1,20 @@
+meta {
+  name: Crear Producto
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/products/createProduct
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  name: Doritos Crisp
+  description: Snack de maíz con sabor a queso
+  price: 10000
+  category: Snacks
+  stock: 50
+  photo: @file()
+}
