@@ -182,3 +182,7 @@ mongo_data/
 
 # IDE / Editores
 .vscode/
+
+
+# Colecciones / Archivos de Bruno
+Element Commerce API/
