@@ -9,6 +9,7 @@ import {
   updateUser,
   deleteUser,
 } from "../controllers/user.controller.js";
+import { protect } from "../middlewares/auth.middleware.js";
 import { uploadUserPhoto } from "../config/cloudinary.js";
 import {
   registerValidator,
@@ -33,7 +34,7 @@ router.post("/logout", logout);
 
 // Rutas de Usuarios (CRUD)
 router.get("/", getAllUsers);
-router.get("/profile", getProfile); // O usar middleware de protección (protect)
+router.get("/profile", protect, getProfile); 
 router.get("/:id", mongoIdValidator, getUserById);
 router.put(
   "/:id",
