@@ -2,6 +2,10 @@ import {
   registerUserService,
   loginUserService,
   getUserProfileService,
+  getAllUsersService,
+  getUserByIdService,
+  updateUserService,
+  deleteUserService,
 } from "../services/user.service.js";
 import { sendTokenCookie } from "../services/auth.service.js";
 import { catchAsync } from "../utils/catchAsync.js";
@@ -32,5 +36,41 @@ export const getProfile = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: { user },
+  });
+});
+
+export const getAllUsers = catchAsync(async (req, res, next) => {
+  const result = await getAllUsersService(req.query);
+  res.status(200).json({
+    status: "success",
+    data: result,
+  });
+});
+
+export const getUserById = catchAsync(async (req, res, next) => {
+  const user = await getUserByIdService(req.params.id);
+  res.status(200).json({
+    status: "success",
+    data: { user },
+  });
+});
+
+export const updateUser = catchAsync(async (req, res, next) => {
+  const updatedUser = await updateUserService(
+    req.params.id,
+    req.body,
+    req.file,
+  );
+  res.status(200).json({
+    status: "success",
+    data: { user: updatedUser },
+  });
+});
+
+export const deleteUser = catchAsync(async (req, res, next) => {
+  await deleteUserService(req.params.id);
+  res.status(204).json({
+    status: "success",
+    data: null,
   });
 });
