@@ -43,6 +43,6 @@ app.get("/health", (req, res) => {
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
-app.use("/api/shoppingCart", cartRoutes);
+app.use("/api/cart", cartRoutes);
 
 export default app;

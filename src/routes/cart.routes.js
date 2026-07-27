@@ -1,20 +1,28 @@
 import { Router } from "express";
 import {
-  getMyCart,
-  addToCart,
-  removeFromCart,
-  clearCart,
+  getMyCartController,
+  addToCartController,
+  removeFromCartController,
+  clearCartController,
 } from "../controllers/cart.controller.js";
 import { protect } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-// Todas las rutas del carrito son protegidas
+// Todas las rutas son protegidas
 router.use(protect);
 
-router.get("/", getMyCart);
-router.post("/items", addToCart);
-router.delete("/items", removeFromCart);
-router.delete("/clear", clearCart);
+// Obtener carrito
+router.get("/", getMyCartController);
+
+// Agregar producto (acepta / y /items)
+router.post("/items", addToCartController);
+
+// Eliminar un producto del carrito (por param o por body)
+router.delete("/items/:productId", removeFromCartController);
+router.delete("/items", removeFromCartController);
+
+// Vaciar carrito
+router.delete("/clear", clearCartController);
 
 export default router;
