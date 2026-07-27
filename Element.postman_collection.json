@@ -25,11 +25,7 @@
               "formdata": [
                 { "key": "firstName", "value": "Alejandro", "type": "text" },
                 { "key": "lastName", "value": "Gómez", "type": "text" },
-                {
-                  "key": "email",
-                  "value": "alejandro@gmail.com",
-                  "type": "text"
-                },
+                { "key": "email", "value": "alejandro@gmail.com", "type": "text" },
                 { "key": "password", "value": "123456789", "type": "text" },
                 { "key": "photo", "type": "file", "src": "" }
               ]
@@ -46,11 +42,7 @@
           "request": {
             "method": "POST",
             "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              }
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
             ],
             "body": {
               "mode": "raw",
@@ -79,7 +71,13 @@
           "name": "Get Profile",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer TU_TOKEN_JWT_AQUI",
+                "type": "text"
+              }
+            ],
             "url": {
               "raw": "{{baseUrl}}/api/users/profile",
               "host": ["{{baseUrl}}"],
@@ -97,14 +95,8 @@
               "host": ["{{baseUrl}}"],
               "path": ["api", "users"],
               "query": [
-                {
-                  "key": "page",
-                  "value": "1"
-                },
-                {
-                  "key": "limit",
-                  "value": "10"
-                }
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
               ]
             }
           }
@@ -118,12 +110,7 @@
               "raw": "{{baseUrl}}/api/users/:id",
               "host": ["{{baseUrl}}"],
               "path": ["api", "users", ":id"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "ID_DEL_USUARIO_AQUI"
-                }
-              ]
+              "variable": [{ "key": "id", "value": "ID_DEL_USUARIO_AQUI" }]
             }
           }
         },
@@ -145,12 +132,7 @@
               "raw": "{{baseUrl}}/api/users/:id",
               "host": ["{{baseUrl}}"],
               "path": ["api", "users", ":id"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "ID_DEL_USUARIO_AQUI"
-                }
-              ]
+              "variable": [{ "key": "id", "value": "ID_DEL_USUARIO_AQUI" }]
             }
           }
         },
@@ -163,12 +145,7 @@
               "raw": "{{baseUrl}}/api/users/:id",
               "host": ["{{baseUrl}}"],
               "path": ["api", "users", ":id"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "ID_DEL_USUARIO_AQUI"
-                }
-              ]
+              "variable": [{ "key": "id", "value": "ID_DEL_USUARIO_AQUI" }]
             }
           }
         }
@@ -183,9 +160,27 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/products",
+              "raw": "{{baseUrl}}/api/products?page=1&limit=10&category=snacks",
               "host": ["{{baseUrl}}"],
-              "path": ["api", "products"]
+              "path": ["api", "products"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "category", "value": "snacks" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Product By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", ":id"],
+              "variable": [{ "key": "id", "value": "ID_DEL_PRODUCTO_AQUI" }]
             }
           }
         },
@@ -193,26 +188,28 @@
           "name": "Crear Producto",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer TU_TOKEN_JWT_AQUI",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "formdata",
               "formdata": [
-                { "key": "name", "value": "Doritos Crisp", "type": "text" },
-                {
-                  "key": "description",
-                  "value": "Snack de maíz con sabor a queso",
-                  "type": "text"
-                },
+                { "key": "nameProduct", "value": "Doritos Crisp", "type": "text" },
+                { "key": "description", "value": "Snack de maíz con sabor a queso", "type": "text" },
                 { "key": "price", "value": "10000", "type": "text" },
-                { "key": "category", "value": "Snacks", "type": "text" },
+                { "key": "category", "value": "snacks", "type": "text" },
                 { "key": "stock", "value": "50", "type": "text" },
-                { "key": "photo", "type": "file", "src": "" }
+                { "key": "photoProduct", "type": "file", "src": "" }
               ]
             },
             "url": {
-              "raw": "{{baseUrl}}/api/products/createProduct",
+              "raw": "{{baseUrl}}/api/products",
               "host": ["{{baseUrl}}"],
-              "path": ["api", "products", "createProduct"]
+              "path": ["api", "products"]
             }
           }
         },
@@ -220,27 +217,50 @@
           "name": "Editar Producto",
           "request": {
             "method": "PUT",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer TU_TOKEN_JWT_AQUI",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "formdata",
               "formdata": [
-                {
-                  "key": "idProduct",
-                  "value": "ID_DEL_PRODUCTO_AQUI",
-                  "type": "text"
-                },
-                {
-                  "key": "name",
-                  "value": "Doritos Crisp Mega",
-                  "type": "text"
-                },
-                { "key": "price", "value": "12000", "type": "text" }
+                { "key": "nameProduct", "value": "Doritos Crisp Mega", "type": "text" },
+                { "key": "price", "value": "12000", "type": "text" },
+                { "key": "photoProduct", "type": "file", "src": "" }
               ]
             },
             "url": {
-              "raw": "{{baseUrl}}/api/products/updateProduct",
+              "raw": "{{baseUrl}}/api/products/:id",
               "host": ["{{baseUrl}}"],
-              "path": ["api", "products", "updateProduct"]
+              "path": ["api", "products", ":id"],
+              "variable": [{ "key": "id", "value": "ID_DEL_PRODUCTO_AQUI" }]
+            }
+          }
+        },
+        {
+          "name": "Calificar Producto",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json", "type": "text" },
+              {
+                "key": "Authorization",
+                "value": "Bearer TU_TOKEN_JWT_AQUI",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"score\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/products/:id/rate",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", ":id", "rate"],
+              "variable": [{ "key": "id", "value": "ID_DEL_PRODUCTO_AQUI" }]
             }
           }
         },
@@ -248,11 +268,17 @@
           "name": "Eliminar Producto",
           "request": {
             "method": "DELETE",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer TU_TOKEN_JWT_AQUI",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "{{baseUrl}}/api/products/deleteProduct/:id",
+              "raw": "{{baseUrl}}/api/products/:id",
               "host": ["{{baseUrl}}"],
-              "path": ["api", "products", "deleteProduct", ":id"],
+              "path": ["api", "products", ":id"],
               "variable": [{ "key": "id", "value": "ID_DEL_PRODUCTO_AQUI" }]
             }
           }
@@ -266,11 +292,17 @@
           "name": "Obtener Carrito",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer TU_TOKEN_JWT_AQUI",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "{{baseUrl}}/api/shoppingCart/getCart",
+              "raw": "{{baseUrl}}/api/cart",
               "host": ["{{baseUrl}}"],
-              "path": ["api", "shoppingCart", "getCart"]
+              "path": ["api", "cart"]
             }
           }
         },
@@ -279,54 +311,58 @@
           "request": {
             "method": "POST",
             "header": [
+              { "key": "Content-Type", "value": "application/json", "type": "text" },
               {
-                "key": "Content-Type",
-                "value": "application/json",
+                "key": "Authorization",
+                "value": "Bearer TU_TOKEN_JWT_AQUI",
                 "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"productId\": \"ID_DEL_PRODUCTO_AQUI\",\n  \"quantity\": 2\n}"
+              "raw": "{\n  \"product\": \"ID_DEL_PRODUCTO_AQUI\",\n  \"quantity\": 2\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/shoppingCart/addToCart",
+              "raw": "{{baseUrl}}/api/cart",
               "host": ["{{baseUrl}}"],
-              "path": ["api", "shoppingCart", "addToCart"]
+              "path": ["api", "cart"]
             }
           }
         },
         {
-          "name": "Remover del Carrito",
+          "name": "Remover Item del Carrito",
           "request": {
             "method": "DELETE",
             "header": [
               {
-                "key": "Content-Type",
-                "value": "application/json",
+                "key": "Authorization",
+                "value": "Bearer TU_TOKEN_JWT_AQUI",
                 "type": "text"
               }
             ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"productId\": \"ID_DEL_PRODUCTO_AQUI\"\n}"
-            },
             "url": {
-              "raw": "{{baseUrl}}/api/shoppingCart/removeFromCart",
+              "raw": "{{baseUrl}}/api/cart/:productId",
               "host": ["{{baseUrl}}"],
-              "path": ["api", "shoppingCart", "removeFromCart"]
+              "path": ["api", "cart", ":productId"],
+              "variable": [{ "key": "productId", "value": "ID_DEL_PRODUCTO_AQUI" }]
             }
           }
         },
         {
           "name": "Vaciar Carrito",
           "request": {
-            "method": "PUT",
-            "header": [],
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer TU_TOKEN_JWT_AQUI",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "{{baseUrl}}/api/shoppingCart/emptyCart",
+              "raw": "{{baseUrl}}/api/cart",
               "host": ["{{baseUrl}}"],
-              "path": ["api", "shoppingCart", "emptyCart"]
+              "path": ["api", "cart"]
             }
           }
         }
@@ -336,61 +372,61 @@
       "name": "Orders",
       "item": [
         {
-          "name": "Crear Orden",
+          "name": "Crear Orden desde Carrito",
           "request": {
             "method": "POST",
             "header": [
+              { "key": "Content-Type", "value": "application/json", "type": "text" },
               {
-                "key": "Content-Type",
-                "value": "application/json",
+                "key": "Authorization",
+                "value": "Bearer TU_TOKEN_JWT_AQUI",
                 "type": "text"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"items\": [\n    {\n      \"product\": \"ID_DEL_PRODUCTO_AQUI\",\n      \"quantity\": 2,\n      \"price\": 10000\n    }\n  ],\n  \"paymentInfo\": {\n    \"method\": \"Credit Card\",\n    \"transactionId\": \"txn_123456789\"\n  },\n  \"shippingAddress\": {\n    \"fullName\": \"Alejandro Gómez\",\n    \"address\": \"Calle Principal #123\",\n    \"city\": \"Ciudad\",\n    \"postalCode\": \"110111\",\n    \"country\": \"Colombia\",\n    \"phone\": \"3001234567\"\n  }\n}"
+              "raw": "{\n  \"paymentInfo\": {\n    \"method\": \"Credit Card\",\n    \"transactionId\": \"txn_123456789\"\n  },\n  \"shippingAddress\": {\n    \"fullName\": \"Alejandro Gómez\",\n    \"address\": \"Calle Principal #123\",\n    \"city\": \"Ciudad\",\n    \"postalCode\": \"110111\",\n    \"country\": \"Colombia\",\n    \"phone\": \"3001234567\"\n  }\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/api/orders/createOrder",
+              "raw": "{{baseUrl}}/api/orders",
               "host": ["{{baseUrl}}"],
-              "path": ["api", "orders", "createOrder"]
+              "path": ["api", "orders"]
             }
           }
         },
         {
-          "name": "Obtener Ordenes del Usuario",
+          "name": "Obtener Mis Ordenes",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer TU_TOKEN_JWT_AQUI",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "{{baseUrl}}/api/orders/getOrdersByUser",
+              "raw": "{{baseUrl}}/api/orders/my-orders",
               "host": ["{{baseUrl}}"],
-              "path": ["api", "orders", "getOrdersByUser"]
+              "path": ["api", "orders", "my-orders"]
             }
           }
         },
         {
-          "name": "Obtener Una Orden",
+          "name": "Obtener Una Orden por ID",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer TU_TOKEN_JWT_AQUI",
+                "type": "text"
+              }
+            ],
             "url": {
-              "raw": "{{baseUrl}}/api/orders/getOrder/:id",
+              "raw": "{{baseUrl}}/api/orders/:id",
               "host": ["{{baseUrl}}"],
-              "path": ["api", "orders", "getOrder", ":id"],
-              "variable": [{ "key": "id", "value": "ID_DE_LA_ORDEN_AQUI" }]
-            }
-          }
-        },
-        {
-          "name": "Eliminar Orden",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/api/orders/deleteOrder/:id",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "orders", "deleteOrder", ":id"],
+              "path": ["api", "orders", ":id"],
               "variable": [{ "key": "id", "value": "ID_DE_LA_ORDEN_AQUI" }]
             }
           }

@@ -1,5 +1,5 @@
 import Product from "../models/product.model.js";
-import { uploadFile } from "../config/firebase.js";
+import { uploadToCloudinary } from "../config/cloudinary.js";
 import { AppError } from "../utils/appError.js";
 
 export const createProductService = async (productData, file, user) => {
@@ -7,17 +7,19 @@ export const createProductService = async (productData, file, user) => {
 
   let photoUrl = "";
   if (file) {
-    const folderPath = `products/${category || "general"}`;
-    const fileName = `${Date.now()}_${file.originalname}`;
-    photoUrl = await uploadFile(file.buffer, folderPath, fileName);
+    const cleanCategory = category ? category.trim().toLowerCase() : "general";
+    const folderPath = `element-commerce/products/${cleanCategory}`;
+
+    // Utilizamos el helper de Cloudinary pasando el buffer y la carpeta
+    photoUrl = await uploadToCloudinary(file.buffer, folderPath);
   }
 
   const product = await Product.create({
     nameProduct,
     description,
     price: Number(price),
-    category,
-    stock: stock ? Number(stock) : 1,
+    category: category?.trim().toLowerCase(),
+    stock: stock !== undefined && stock !== "" ? Number(stock) : 1,
     photoProduct: photoUrl,
     user: user._id,
   });
@@ -45,13 +47,12 @@ export const updateProductService = async (
   }
 
   if (file) {
-    const folderPath = `products/${updateData.category || product.category}`;
-    const fileName = `${Date.now()}_${file.originalname}`;
-    updateData.photoProduct = await uploadFile(
-      file.buffer,
-      folderPath,
-      fileName,
-    );
+    const cleanCategory = (updateData.category || product.category || "general")
+      .trim()
+      .toLowerCase();
+    const folderPath = `element-commerce/products/${cleanCategory}`;
+
+    updateData.photoProduct = await uploadToCloudinary(file.buffer, folderPath);
   }
 
   const updatedProduct = await Product.findByIdAndUpdate(
@@ -65,6 +66,7 @@ export const updateProductService = async (
 
   return updatedProduct;
 };
+
 
 export const deleteProductService = async (idProduct, currentUser) => {
   const product = await Product.findById(idProduct);

@@ -5,7 +5,6 @@ import { catchAsync } from "../utils/catchAsync.js";
 
 /**
  * Middleware para proteger rutas mediante autenticación JWT
- * Busca el token en Cookies HttpOnly o en el Header Authorization
  */
 export const protect = catchAsync(async (req, res, next) => {
   let token;
@@ -33,7 +32,23 @@ export const protect = catchAsync(async (req, res, next) => {
 
   // Verificar la validez del token
   const secret = process.env.JWT_SECRET || "secretkey";
-  const decoded = jwt.verify(token, secret);
+  let decoded;
+
+  try {
+    decoded = jwt.verify(token, secret);
+  } catch (error) {
+    if (error.name === "TokenExpiredError") {
+      return next(
+        new AppError(
+          "Tu sesión ha expirado. Por favor inicia sesión de nuevo.",
+          401,
+        ),
+      );
+    }
+    return next(
+      new AppError("Token inválido. Por favor inicia sesión de nuevo.", 401),
+    );
+  }
 
   // Verificar si el usuario todavía existe en la base de datos
   const currentUser = await User.findById(decoded.id);
@@ -49,7 +64,7 @@ export const protect = catchAsync(async (req, res, next) => {
 });
 
 /**
- * Middleware para restringir el acceso según roles de usuario (ej: 'admin')
+ * Middleware para restringir el acceso según roles de usuario
  */
 export const restrictTo = (...roles) => {
   return (req, res, next) => {
