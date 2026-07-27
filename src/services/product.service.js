@@ -2,6 +2,8 @@ import Product from "../models/product.model.js";
 import { uploadToCloudinary } from "../config/cloudinary.js";
 import { AppError } from "../utils/appError.js";
 
+
+// Crear un producto
 export const createProductService = async (productData, file, user) => {
   const { nameProduct, description, price, category, stock } = productData;
 
@@ -27,6 +29,8 @@ export const createProductService = async (productData, file, user) => {
   return product;
 };
 
+
+// Actualizar un producto
 export const updateProductService = async (
   idProduct,
   updateData,
@@ -68,6 +72,7 @@ export const updateProductService = async (
 };
 
 
+// Eliminar un producto
 export const deleteProductService = async (idProduct, currentUser) => {
   const product = await Product.findById(idProduct);
   if (!product) {
@@ -84,6 +89,8 @@ export const deleteProductService = async (idProduct, currentUser) => {
   await Product.findByIdAndDelete(idProduct);
 };
 
+
+// Obtener productos filtrados
 export const getProductsFilteredService = async (queryParams) => {
   const {
     productId,
@@ -132,6 +139,8 @@ export const getProductsFilteredService = async (queryParams) => {
   };
 };
 
+
+// Calificar un producto
 export const rateProductService = async (productId, score, userId) => {
   const product = await Product.findById(productId);
   if (!product) {

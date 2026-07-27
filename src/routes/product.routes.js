@@ -13,7 +13,7 @@ import { uploadUserPhoto } from "../config/cloudinary.js";
 const router = Router();
 
 // Rutas Públicas (Búsqueda y visualización)
-router.get("/:productId", getProductsController);
+router.get("/", getProductsController);
 
 // Rutas Protegidas (Crear, Editar, Eliminar, Calificar)
 router.use(protect);
